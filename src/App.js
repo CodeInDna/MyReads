@@ -4,7 +4,7 @@ import './App.css'
 import SearchBooks from './Components/SearchBooks';
 import ListBooks from './Components/ListBooks';
 import * as BooksAPI from './BooksAPI';
-
+import {Route} from 'react-router-dom';
 class BooksApp extends React.Component {
   state = {
     /**
@@ -13,10 +13,9 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false,
     books: []
   }
-  
+
 // get all books
   componentDidMount(){
     BooksAPI.getAll()
@@ -39,11 +38,23 @@ handleShelfChange = (book, shelf) => {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-            <SearchBooks />
-        ) : (
+        
+        <Route path="/" exact
+          render={() => (
             <ListBooks books={this.state.books} changeShelf={this.handleShelfChange} />
-        )}
+          )}
+        />
+
+        <Route path="/search"
+          render={({history}) => (
+            <SearchBooks changeShelf={(book, shelf)=> {
+              this.handleShelfChange(book, shelf)
+              history.push('/')
+              }} 
+              books={this.state.books}
+            />
+          )}
+        />
       </div>
     )
   }
