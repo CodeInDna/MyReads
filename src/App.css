@@ -11,8 +11,7 @@ body, .app {
   font-family: 'Roboto', sans-serif;
 }
 h1{
-  font-family: 'Cookie', cursive;  
-  text-transform: uppercase;
+  font-family: 'Muli', sans-serif;
   font-size: 3rem;
 }
 /* main page */
@@ -161,10 +160,11 @@ button:active {
 
 .book-title {
   margin-top: 10px;
+  color: antiquewhite;
 }
 
 .book-authors {
-  color: #999;
+  color: #6588DC;;
 }
 
 .book-top {
