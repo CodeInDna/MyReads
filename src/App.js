@@ -16,16 +16,25 @@ class BooksApp extends React.Component {
     showSearchPage: false,
     books: []
   }
-
+  
+// get all books
   componentDidMount(){
     BooksAPI.getAll()
     .then(books => {
-      console.log(books);
         this.setState(() => ({
           books
         }))
     })
   }
+
+// update shelf
+handleShelfChange = (book, shelf) => {
+  book.shelf = shelf;
+  this.setState(currentState => ({
+    books: currentState.books.filter(b => b.id !== book.id).concat(book)
+  }))
+  BooksAPI.update(book, shelf)
+}
 
   render() {
     return (
@@ -33,7 +42,7 @@ class BooksApp extends React.Component {
         {this.state.showSearchPage ? (
             <SearchBooks />
         ) : (
-            <ListBooks books={this.state.books}/>
+            <ListBooks books={this.state.books} changeShelf={this.handleShelfChange} />
         )}
       </div>
     )
